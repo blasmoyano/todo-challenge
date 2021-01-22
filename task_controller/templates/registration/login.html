@@ -1,0 +1,23 @@
+{% extends '_base.html' %}
+{% load static %}
+
+{% block body %}
+<div class="container-fluid">
+    <div class="row h-100">
+        <div class="col-sm-6 my-auto mx-auto">
+            <div class="card">
+                <div class="card-header card-login">
+                    <h4 class="card-login-text">Iniciar Sesion</h4>
+                </div>
+                <div class="card-body">
+                    <form enctype="multipart/form-data" autocomplete="off" method="post" novalidate>
+                        {% csrf_token %}
+                        {% include 'includes/bs4_form_login.html' with form=form %}
+                        <button type="submit" class="btn btn-primary btn-center" >Enviar</button>
+                    </form>
+                </div>
+            </div>
+       </div>
+    </div>
+</div>
+{% endblock %}

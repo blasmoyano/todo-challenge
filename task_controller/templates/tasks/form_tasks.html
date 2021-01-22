@@ -1,0 +1,18 @@
+{% extends '_base.html' %}
+{% load static %}
+
+{% block body %}
+    <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+        <h1 class="h2">{{ name_form }} Tarea</h1>
+    </div>
+    <div class="row  justify-content-md-center">
+        <div class="col-6">
+            <form enctype="multipart/form-data" method="post" novalidate>
+                {% csrf_token %}
+                {% include 'includes/bs4_form.html' with form=form %}
+                <button type="submit" class="btn btn-outline-primary btn-lg btn-block">Guardar</button>
+            </form>
+        </div>
+    </div>
+{% endblock %}
+
