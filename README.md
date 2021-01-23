@@ -35,6 +35,7 @@ python ./manage.py test tasks.tests  --settings=task_controller.settings.[desa |
 ```
 
 # urls
+* /docs
 * /admin
 * /login
 * /logout
@@ -46,10 +47,3 @@ python ./manage.py test tasks.tests  --settings=task_controller.settings.[desa |
 * /tasks/api/crear_tareas
 * /tasks/api/borrar_tarea/<int>
 * /tasks/api/update_tarea/<int>
-
-
-# Me falta
- * docker ?
- * API DE BUSQEUDA
- * DOCS swagger
- * PEP
