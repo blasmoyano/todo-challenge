@@ -1,4 +1,5 @@
 import logging
+from datetime import datetime
 from .models import Task
 from .tasksFilter import TaskFilter
 from .serializer import TaskSerializer
@@ -9,10 +10,11 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
 
+
 logger = logging.getLogger(__name__)
 
 
-class TaskIndex(ListView): # LoginRequiredMixin
+class TaskIndex(ListView):
     model = Task
     template_name = "tasks/index.html"
     paginate_by = 10
@@ -112,3 +114,44 @@ class PostUpdateTask(APIView):
         except Task.DoesNotExist:
             logger.warning('400 en update task')
             return Response(status=status.HTTP_400_BAD_REQUEST)
+
+
+class GetSearchTask(APIView):
+    """
+        API TASK: Buscar tarea por contenido y fecha.
+        fecha: se espera el formato YYYY/MM/DD
+    """
+
+    def get(self, request):
+        content = request.query_params.get('content', None)
+        date_create = request.query_params.get('date', None)
+        if date_create is None:
+            try:
+                query = Task.objects.filter(
+                    content__icontains=content,
+                )
+            except Task.DoesNotExist:
+                logger.warning('400 en update task')
+                return Response(status=status.HTTP_400_BAD_REQUEST)
+        else:
+            try:
+                str_date = datetime.strptime(date_create, '%Y/%m/%d')
+                query = Task.objects.filter(
+                    content__icontains=content,
+                    date_create__year=str_date.year,
+                    date_create__month=str_date.month,
+                    date_create__day=str_date.day,
+                )
+            except Task.DoesNotExist:
+                logger.warning('400 en update task')
+                return Response(status=status.HTTP_400_BAD_REQUEST)
+        list_result_task = []
+        for result_task in query:
+            json_tasks = {
+                'name': result_task.name,
+                'content': result_task.content,
+                'date_create': result_task.date_create,
+                'status_task': result_task.status_task
+            }
+            list_result_task.append(json_tasks)
+        return Response([list_result_task])

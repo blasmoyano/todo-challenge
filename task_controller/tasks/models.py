@@ -2,7 +2,10 @@ from django.db import models
 
 
 class Task(models.Model):
-    STATUS_TASK_CHOICE = ((True, "Completada"), (False, "Pendiente"))
+    STATUS_TASK_CHOICE = (
+        (True, "Completada"),
+        (False, "Pendiente")
+    )
 
     name = models.CharField(
         max_length=144,

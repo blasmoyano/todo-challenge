@@ -41,6 +41,12 @@ urlpatterns = [
         'api/update_tarea/<int:id>',
         views.PostUpdateTask.as_view()
     ),
+    path(
+        'api/search',
+        views.GetSearchTask.as_view()
+    ),
+
+
 ]
 
 if settings.DEBUG:
